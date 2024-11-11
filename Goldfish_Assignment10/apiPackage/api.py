@@ -1,5 +1,21 @@
+########################################################################################################################################################################
+# Name: Will Padgett, Alex Carnes                                                                                                                                      #
+# email:  padgetwg@mail.uc.edu, carnesas@mail.uc.edu                                                                                                                   #
+# Assignment Number: Assignment 10                                                                                                                                     #
+# Due Date:   11/14/2024                                                                                                                                               # 
+# Course #/Section: 4010/001                                                                                                                                           #
+# Semester/Year:   1/4                                                                                                                                                 #
+# Brief Description of the assignment: This assignment executes an API call using a URL.                                                                               #                                                                                                                              
+# Brief Description of what this module does: This module creates the APIDataHandler class to interect with the Alpha Vantage API to retrieve and process stock data.  #                                                               #                          
+#                                                                                                                                                                      #
+# Citations: W3 Schools                                                                                                                                                #
+# Anything else that's relevant:                                                                                                                                       #
+# #api.py                                                                                                                                                              #
+########################################################################################################################################################################
+
 import requests
 import csv
+
 
 class APIDataHandler:
     """
@@ -71,12 +87,13 @@ class APIDataHandler:
         
         return parsed_data
 
-    def print_summary(self, data):
+    def print_summary(self, data, symbol):
         """
         Print a summary of interesting data to the console, including the latest data point and highest price in the series.
 
         @Param:
         data list: The parsed list of time series data.
+        symbol: String is the stock being displayed
         """
         if not data:
             print("No data available to summarize.")
@@ -85,7 +102,7 @@ class APIDataHandler:
         latest_data = data[0]
         max_close_price = max(float(item['4. close']) for item in data)
 
-        print("\n--- Stock Data Summary ---")
+        print(f"--- {symbol} Stock Data Summary ---")
         print(f"Most recent data (timestamp: {latest_data['timestamp']}):")
         print(f"  Open: {latest_data['1. open']}")
         print(f"  High: {latest_data['2. high']}")

@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>6e6ba2cd-57c6-4739-a490-0cd38e8fa741</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>apiPackage\api.py</StartupFile>
+    <StartupFile>mainPackage\main.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
