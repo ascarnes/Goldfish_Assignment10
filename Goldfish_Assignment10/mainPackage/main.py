@@ -19,7 +19,7 @@ from apiPackage.api import APIDataHandler
 
 if __name__ == "__main__" :
         
-    api_key = ""
+    api_key = "CAYQJI56NU207574"
     function = 'TIME_SERIES_INTRADAY'
     symbol = 'AAPL'
     interval = '5min'
