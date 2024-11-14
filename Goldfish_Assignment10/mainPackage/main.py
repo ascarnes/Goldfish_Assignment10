@@ -19,23 +19,17 @@ from apiPackage.api import APIDataHandler
 
 if __name__ == "__main__" :
         
-    api_key = "CAYQJI56NU207574"
-    function = 'TIME_SERIES_INTRADAY'
-    symbol = 'AAPL'
-    interval = '5min'
-    outputsize = 'compact'
+   
  
-    handler = APIDataHandler(api_key)
-    raw_data = handler.get_data(function=function, symbol=symbol, interval=interval, outputsize=outputsize)
- 
+    handler = APIDataHandler()
+    # Fetch data
+    raw_data = handler.get_data()         
     # Parse data
-    parsed_data = handler.parse_data(raw_data)
- 
-    # Print interesting data summary
-    handler.print_summary(parsed_data, symbol)
- 
+    parsed_data = handler.parse_data(raw_data)  
+     # Print summary
+    handler.print_summary(parsed_data)     
     # Save data to CSV
-    handler.save_to_csv(parsed_data, filename='stock_data.csv')
 
+    handler.save_to_csv(parsed_data)       
  
 

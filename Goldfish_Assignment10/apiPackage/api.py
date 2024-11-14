@@ -6,7 +6,7 @@
 # Course #/Section: 4010/001                                                                                                                                           #
 # Semester/Year:   1/4                                                                                                                                                 #
 # Brief Description of the assignment: This assignment executes an API call using a URL.                                                                               #                                                                                                                              
-# Brief Description of what this module does: This module creates the APIDataHandler class to interect with the Alpha Vantage API to retrieve and process stock data.  #                                                               #                          
+# Brief Description of what this module does: This module creates the APIDataHandler class to interect with the Alpha Vantage API to retrieve and process stock data.  #                                                                                         
 #                                                                                                                                                                      #
 # Citations: W3 Schools                                                                                                                                                #
 # Anything else that's relevant:                                                                                                                                       #
@@ -18,6 +18,7 @@ import csv
 
 
 class APIDataHandler:
+    
     """
     A handler for interacting with the Alpha Vantage API to retrieve and process stock data.
 
@@ -26,36 +27,47 @@ class APIDataHandler:
      base_url str: The base URL for Alpha Vantage API requests.
     """
     
-    def __init__(self, api_key):
+    def __init__(self):
         """
-        Initialize the API client with the provided API key.
+        Initialize the APIDataHandler with default parameters for accessing stock data.
 
-        @Param
-        api_key (str): The API key used for authenticating requests to the Alpha Vantage API.
+        @Attributes
+        api_key str: The API key for authenticating with the Alpha Vantage API.
+        base_url str: The base URL for the Alpha Vantage API endpoint.
+        function str: The specific API function to call.
+        symbol str: The stock symbol for which data is being fetched.
+        interval str: The time interval for the data (default is '5min').
+        outputsize str: The amount of data to retrieve .
         """
-        self.api_key = api_key
+        self.api_key = "CAYQJI56NU207574" 
         self.base_url = 'https://www.alphavantage.co/query'
+        self.function = 'TIME_SERIES_INTRADAY'
+        self.symbol = 'AAPL'
+        self.interval = '5min'
+        self.outputsize = 'compact'
+        
 
-    def get_data(self, function, symbol, interval='5min', outputsize='compact', datatype='json'):
+    def get_data(self, datatype='json'):
         """
         Fetch data from the Alpha Vantage API based on specified parameters.
 
         @Param
         function str: The specific API function to call (e.g., 'TIME_SERIES_INTRADAY').
         symbol str: The stock symbol for which data is being fetched.
-        interval str: The time interval for the data (default is '5min').
+        interval str: The time interval for the data.
         outputsize str: The amount of data to retrieve ('compact' or 'full').
         datatype str: The data format to be returned ('json' or 'csv').
 
         @Return
         dict or str: The response from the API, in JSON format (parsed as a dictionary) or CSV format (as a string).
         """
+        
         params = {
-            'function': function,
-            'symbol': symbol,
-            'interval': interval,
+            'function': self.function,
+            'symbol': self.symbol,
+            'interval': self.interval,
             'apikey': self.api_key,
-            'outputsize': outputsize,
+            'outputsize': self.outputsize,
             'datatype': datatype
         }
 
@@ -87,7 +99,7 @@ class APIDataHandler:
         
         return parsed_data
 
-    def print_summary(self, data, symbol):
+    def print_summary(self, data):
         """
         Print a summary of interesting data to the console, including the latest data point and highest price in the series.
 
@@ -102,7 +114,7 @@ class APIDataHandler:
         latest_data = data[0]
         max_close_price = max(float(item['4. close']) for item in data)
 
-        print(f"--- {symbol} Stock Data Summary ---")
+        print(f"--- {self.symbol} Stock Data Summary ---")
         print(f"Most recent data (timestamp: {latest_data['timestamp']}):")
         print(f"  Open: {latest_data['1. open']}")
         print(f"  High: {latest_data['2. high']}")
@@ -110,7 +122,7 @@ class APIDataHandler:
         print(f"  Close: {latest_data['4. close']}")
         print(f"Highest closing price in the series: {max_close_price}")
 
-    def save_to_csv(self, data, filename):
+    def save_to_csv(self, data, filename= 'Stock_data.csv'):
         """
         Save data to a CSV file.
 
